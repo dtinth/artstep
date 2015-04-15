@@ -96,7 +96,7 @@ function wrap(fn) {
 function coercePattern(pattern) {
   if (typeof pattern === 'string') {
     pattern = pattern.replace(/"\.\.\."/g, '"([^"]*)"')
-    return new RegExp(pattern)
+    return new RegExp('^' + pattern + '$')
   } else {
     return pattern
   }
