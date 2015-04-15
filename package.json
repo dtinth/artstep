@@ -1,6 +1,6 @@
 {
   "name": "artstep",
-  "version": "2015.0.0",
+  "version": "2015.1.0",
   "description": "Beautiful step definitions for Cucumber.js",
   "main": "index.js",
   "scripts": {
