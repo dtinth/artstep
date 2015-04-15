@@ -19,6 +19,9 @@ var API = {
   after: function(callback) {
     this.After(wrap(callback))
   },
+  afterAll: function(callback) {
+    this.registerHandler('AfterFeatures', wrap(callback))
+  },
   around: function(callback) {
     var finish  = function() {
       throw new Error('Must yield/call run().')

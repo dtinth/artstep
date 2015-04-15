@@ -33,4 +33,7 @@ module.exports = steps()
     console.log('takes', finish - start, 'ms')
   })
 })
+.afterAll(function() {
+  console.log('all is done...\n')
+})
 
