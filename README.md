@@ -5,6 +5,8 @@ Artstep
 Fluent, painless, and beautiful synchronous/asynchronous step definitions for [Cucumber.js](https://github.com/cucumber/cucumber-js).
 Supports promises, generators, and async functions, powered by [co](https://www.npmjs.com/package/co).
 
+Oh, and listen to some [nice chill trap and artstep](https://www.youtube.com/watch?v=eKJJqu6P4IQ).
+
 
 Why?
 ----
