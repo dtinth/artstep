@@ -1,0 +1,20 @@
+{
+  "name": "example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "cucumber-js Website.feature --require steps-es5.js -f pretty",
+    "test:es6": "iojs ./node_modules/.bin/cucumber-js Website.feature --require steps-es6.js -f pretty",
+    "test:es7": "babel-node --stage 1 ./node_modules/.bin/cucumber-js Website.feature --require steps-es7.js -f pretty"
+  },
+  "author": "Thai Pangsakulyanont <org.yi.dttvb@gmail.com> (http://dt.in.th/)",
+  "license": "MIT",
+  "devDependencies": {
+    "babel": "^5.1.10",
+    "chai": "^2.2.0",
+    "chai-as-promised": "^5.0.0",
+    "cucumber": "^0.4.8",
+    "selenium-webdriver": "^2.45.1"
+  }
+}

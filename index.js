@@ -14,13 +14,22 @@ var API = {
     this.Then(coercePattern(pattern), wrap(callback))
   },
   before: function(callback) {
-    this.Before(wrap(callback))
+    var args = [].slice.call(arguments)
+    this.Before.apply(this, args.concat([wrap(args.pop())]))
   },
   after: function(callback) {
-    this.After(wrap(callback))
+    var args = [].slice.call(arguments)
+    this.After.apply(this, args.concat([wrap(args.pop())]))
   },
   afterAll: function(callback) {
     this.registerHandler('AfterFeatures', wrap(callback))
+  },
+  beforeAll: function(callback) {
+    var args = [].slice.call(arguments)
+    this.Before.apply(this, args.concat([wrap(once(args.pop()))]))
+  },
+  hook: function(name, callback) {
+    this.registerHandler(name, wrap(callback))
   },
   around: function(callback) {
     var finish  = function() {
@@ -106,3 +115,14 @@ function pending() {
   return PENDING
 }
 
+function once(f) {
+  var run = false
+  var result
+  return function() {
+    if (!run) {
+      run = true
+      result = f.apply(this, arguments)
+    }
+    return result
+  }
+}

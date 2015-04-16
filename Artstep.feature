@@ -15,3 +15,16 @@ Feature: Artstep
     Given Artstep is installed
     When the function returns PENDING
     Then the scenario is pending
+
+  @Test
+  Scenario: Tagged Before Hook with Tag
+    Then the tagged before hook is run
+
+  @Test
+  Scenario: Tagged Before Hook with Tag (again)
+    Then the tagged before hook is run
+
+  Scenario: Tagged Before Hook without Tag
+    Then the tagged before hook is not run
+
+

@@ -1,6 +1,8 @@
 
 var steps = require('./')
 
+var already = false
+
 module.exports = steps()
 .given('Artstep is installed', function() {
   /* It is! And look, no callback! */
@@ -36,4 +38,23 @@ module.exports = steps()
 .afterAll(function() {
   console.log('all is done...\n')
 })
-
+.beforeAll('@Test', function() {
+  if (already) {
+    throw new Error('wtf')
+  } else {
+    already = true
+    console.log('before all @Test')
+  }
+})
+.before('@Test', function() {
+  this.taggedBeforeHook = true
+})
+.then('the tagged before hook is run', function() {
+  if (!this.taggedBeforeHook) throw new Error('Ouch it did not run')
+})
+.then('the tagged before hook is not run', function() {
+  if (this.taggedBeforeHook) throw new Error('Ouch it should not run')
+})
+.beforeAll(function() {
+  console.log('Get ready!')
+})
