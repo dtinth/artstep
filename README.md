@@ -20,7 +20,6 @@ It simply sucks. As of v0.12:
 - If you forget to call the `callback` function, the event queue is drained and Cucumber simply exits without reporting anything.
 - No support for promises or generators.
 - Having to use `this.` every time to define a single step.
-- Regular expressions are ugly.
 
 So I created some wrapper functions for them and then turn it into a library.
 
