@@ -5,13 +5,13 @@ var co = require('co')
 
 var API = {
   given: function(pattern, callback) {
-    this.Given(coercePattern(pattern), wrap(callback))
+    this.Given(pattern, wrap(callback))
   },
   when: function(pattern, callback) {
-    this.When(coercePattern(pattern), wrap(callback))
+    this.When(pattern, wrap(callback))
   },
   then: function(pattern, callback) {
-    this.Then(coercePattern(pattern), wrap(callback))
+    this.Then(pattern, wrap(callback))
   },
   before: function(callback) {
     var args = [].slice.call(arguments)
@@ -59,7 +59,9 @@ module.exports = function steps() {
     for (var i = 0; i < hooks.length; i ++) hooks[i].call(this)
   }
   function addAPI(key, f) {
-    artstepDefinitionsWrapper[key] = function() {
+    artstepDefinitionsWrapper[key] =
+    artstepDefinitionsWrapper[key.charAt(0).toUpperCase() + key.substr(1)] =
+    function() {
       var args = [].slice.call(arguments)
       hooks.push(function() {
         f.apply(this, args)
@@ -99,15 +101,6 @@ function wrap(fn) {
         callback(err)
       }
     )
-  }
-}
-
-function coercePattern(pattern) {
-  if (typeof pattern === 'string') {
-    pattern = pattern.replace(/"\.\.\."/g, '"([^"]*)"')
-    return new RegExp('^' + pattern + '$')
-  } else {
-    return pattern
   }
 }
 

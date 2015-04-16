@@ -42,10 +42,11 @@ meaning that they all return the same function.
 
 ```js
 var steps = require('artstep')
+
 module.exports = steps()
-.given(pattern, handler)
-.when(pattern, handler)
-.then(pattern, handler)
+.Given(pattern, handler)
+.When(pattern, handler)
+.Then(pattern, handler)
 .before(...tags, handler)
 .after(...tags, handler)
 .beforeAll(handler)
@@ -53,16 +54,7 @@ module.exports = steps()
 .around(handler)
 ```
 
-### Pattern
-
-In addition to being a __RegExp__,
-a pattern may be a __String__,
-which will then be converted into a RegExp.
-The conversion is done according to the following rules:
-
-- `^` is added in front of the pattern.
-- `$` is added after the pattern.
-- `"..."` is turned into `"([^"]+)"`.
+__Note:__ Both PascalCase and lowerCamelCase versions are available for all these methods.
 
 
 ### Handler Function
@@ -72,7 +64,7 @@ A handler is:
 - A synchronous function. Handler will finish running immediately:
 
     ```js
-    .then('the title contains "..."', function(text) {
+    .Then('the title contains "..."', function(text) {
       expect(this.subject.title).to.contain(text)
     })
     ```
@@ -80,7 +72,7 @@ A handler is:
 - A function that returns a Promise:
 
     ```js
-    .when('I select the (\\d+)(?:st|nd|rd|th) song', function(n) {
+    .When('I select the (\\d+)(?:st|nd|rd|th) song', function(n) {
       return driver.findElements(By.css('ul.music-list > li'))
       .then(function(items) {
         return items[n - 1].click()
@@ -91,7 +83,7 @@ A handler is:
 - An ES6 generator function:
 
     ```js
-    .when('I select the (\\d+)(?:st|nd|rd|th) song', function*(n) {
+    .When('I select the (\\d+)(?:st|nd|rd|th) song', function*(n) {
       var items = yield driver.findElements(By.css('ul.music-list > li'))
       yield items[n - 1].click()
     })
@@ -105,7 +97,7 @@ A handler is:
 - An ES7 asynchronous function:
 
     ```js
-    .when('I select the (\\d+)(?:st|nd|rd|th) song', async function(n) {
+    .When('I select the (\\d+)(?:st|nd|rd|th) song', async function(n) {
       var items = await driver.findElements(By.css('ul.music-list > li'))
       await items[n - 1].click()
     })
@@ -126,7 +118,7 @@ That promise can be yielded.
 - ES5 + Promises:
 
     ```js
-    .around(function(run) {
+    .Around(function(run) {
       return stuffBefore()
       .then(run)
       .then(stuffAfter)
@@ -135,7 +127,7 @@ That promise can be yielded.
 - ES6 Generators:
 
     ```js
-    .around(function*(run) {
+    .Around(function*(run) {
       var start = Date.now()
       yield run()
       var finish = Date.now()
@@ -146,7 +138,7 @@ That promise can be yielded.
 - ES7 Async Functions:
 
     ```js
-    .around(async function(run) {
+    .Around(async function(run) {
       var start = Date.now()
       await run()
       var finish = Date.now()

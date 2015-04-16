@@ -17,10 +17,13 @@ module.exports = steps()
 .when('the function returns PENDING', function() {
   return this.PENDING
 })
-.then('I am "..."', function(x) {
+.then('I am "$adjective"', function(x) {
   setTimeout(function() {
     console.log('\033[1;46;22;30m I\'M SO ' + x.toUpperCase() + '! \033[m')
   }, 100)
+})
+.then('the scenario is pending', function(x) {
+  throw new Error('Scenario is pending! This step must not run!')
 })
 .before(function() {
   console.log('before')

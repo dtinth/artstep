@@ -10,13 +10,13 @@ when('I visit my website', async function() {
   await driver.get('http://dt.in.th')
 })
 
-then('I see (\\d+) links below the heading', async function(n) {
+then('I see $n links below the heading', async function(n) {
   let array = await driver.findElements(By.css('h1 + ul a'))
   expect(array).to.have.length(+n)
 })
 
-then('I see a link to "..."', async function(text) {
-  await driver.findElement(By.css('a[href="' + text + '"]'))
+then('I see a link to "$href"', async function(href) {
+  await driver.findElement(By.css('a[href="' + href + '"]'))
 })
 
 afterAll(async function() {

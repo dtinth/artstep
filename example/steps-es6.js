@@ -8,15 +8,15 @@ const By        = webdriver.By
 let driver = new webdriver.Builder().forBrowser('firefox').build()
 
 module.exports = steps()
-.when('I visit my website', function*() {
+.When('I visit my website', function*() {
   yield driver.get('http://dt.in.th')
 })
-.then('I see (\\d+) links below the heading', function*(n) {
+.Then('I see $n links below the heading', function*(n) {
   let array = yield driver.findElements(By.css('h1 + ul a'))
   expect(array).to.have.length(+n)
 })
-.then('I see a link to "..."', function*(text) {
-  yield driver.findElement(By.css('a[href="' + text + '"]'))
+.Then('I see a link to "$href"', function*(href) {
+  yield driver.findElement(By.css('a[href="' + href + '"]'))
 })
 .afterAll(function*() {
   yield driver.quit()
