@@ -72,7 +72,8 @@ A handler is:
 - A function that returns a Promise:
 
     ```js
-    .When('I select the (\\d+)(?:st|nd|rd|th) song', function(n) {
+    .When('I select the $n song', function(n) {
+      n = parseInt(n, 10)
       return driver.findElements(By.css('ul.music-list > li'))
       .then(function(items) {
         return items[n - 1].click()
@@ -80,10 +81,20 @@ A handler is:
     })
     ```
 
+    In CoffeeScript, it looks very beautiful:
+
+    ```js
+    .When 'I select the $n song', (n) ->
+      n = parseInt(n, 10)
+      driver.findElements(By.css('ul.music-list > li')).then (items) ->
+        items[n - 1].click()
+    ```
+
 - An ES6 generator function:
 
     ```js
-    .When('I select the (\\d+)(?:st|nd|rd|th) song', function*(n) {
+    .When('I select the $n song', function*(n) {
+      n = parseInt(n, 10)
       var items = yield driver.findElements(By.css('ul.music-list > li'))
       yield items[n - 1].click()
     })
@@ -97,10 +108,21 @@ A handler is:
 - An ES7 asynchronous function:
 
     ```js
-    .When('I select the (\\d+)(?:st|nd|rd|th) song', async function(n) {
+    .When('I select the $n song', async function(n) {
+      n = parseInt(n, 10)
       var items = await driver.findElements(By.css('ul.music-list > li'))
       await items[n - 1].click()
     })
+    ```
+
+- An async function from [asyncawait](https://github.com/yortus/asyncawait),
+  which makes this CoffeeScript steps definitions extremely beautiful!
+
+    ```coffee
+    .When 'I select the $n song', async ->
+      n = parseInt(n, 10)
+      items = await driver.findElements(By.css('ul.music-list > li'))
+      await items[n - 1].click()
     ```
 
 - `null`, `false` or `undefined`. In this case, the steps will be marked as "pending."
