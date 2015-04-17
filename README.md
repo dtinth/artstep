@@ -15,7 +15,7 @@ When creating step definitions for [cucumber-js](https://github.com/cucumber/cuc
 
 ![Y U NO...](http://i0.kym-cdn.com/photos/images/newsfeed/000/089/665/tumblr_l96b01l36p1qdhmifo1_500.jpg)
 
-It simply sucks. As of v0.12:
+It simply sucks. As of v0.4.8:
 
 - If you forget to call the `callback` function, the event queue is drained and Cucumber simply exits without reporting anything.
 - No support for promises or generators.
