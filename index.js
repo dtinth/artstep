@@ -1,4 +1,3 @@
-
 require('es6-promise').polyfill()
 
 var co = require('co')
@@ -80,12 +79,13 @@ module.exports = function steps() {
 exports.PENDING = PENDING
 
 function wrap(fn) {
-  fn      = fn || pending
-  return function() {
+  var argNames = getParamNames(fn);
+  fn = fn || pending
+  var wrappedFunction = function() {
     var callback  = arguments[arguments.length - 1]
     var world     = this
     var args      = [].slice.call(arguments)
-    co(function() {
+    return co(function() {
       world.PENDING = PENDING
       return fn.apply(world, args)
     })
@@ -102,6 +102,10 @@ function wrap(fn) {
       }
     )
   }
+  if (argNames) {
+    Object.defineProperty(wrappedFunction, 'length', {value: argNames.length});
+  }
+  return wrappedFunction;
 }
 
 function pending() {
@@ -118,4 +122,14 @@ function once(f) {
     }
     return result
   }
+}
+
+function getParamNames(func) {
+  if (!func) return;
+  var STRIP_COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/mg;
+  var ARGUMENT_NAMES = /([^\s,]+)/g;
+  var fnStr = func.toString().replace(STRIP_COMMENTS, '');
+  var result = fnStr.slice(fnStr.indexOf('(') + 1, fnStr.indexOf(')')).match(ARGUMENT_NAMES);
+  if (result === null) result = [];
+  return result;
 }
