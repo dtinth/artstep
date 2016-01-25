@@ -79,7 +79,6 @@ module.exports = function steps () {
 exports.PENDING = PENDING
 
 function wrap (fn) {
-  var argNames = getParamNames(fn)
   fn = fn || pending
   var wrappedFunction = function () {
     var callback = arguments[arguments.length - 1]
@@ -89,22 +88,13 @@ function wrap (fn) {
       world.PENDING = PENDING
       return fn.apply(world, args)
     })
-    .then(
-      function (result) {
-        if (result === PENDING) {
-          callback.pending()
-        } else {
-          callback()
-        }
-      },
-      function (err) {
-        callback(err)
+    .then(function (result) {
+      if (result === PENDING) {
+        callback.pending()
       }
-    )
+    })
   }
-  if (argNames) {
-    Object.defineProperty(wrappedFunction, 'length', {value: argNames.length})
-  }
+  Object.defineProperty(wrappedFunction, 'length', { value: fn.length })
   return wrappedFunction
 }
 
@@ -122,14 +112,4 @@ function once (f) {
     }
     return result
   }
-}
-
-function getParamNames (func) {
-  if (!func) return
-  var STRIP_COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/mg
-  var ARGUMENT_NAMES = /([^\s,]+)/g
-  var fnStr = func.toString().replace(STRIP_COMMENTS, '')
-  var result = fnStr.slice(fnStr.indexOf('(') + 1, fnStr.indexOf(')')).match(ARGUMENT_NAMES)
-  if (result === null) result = []
-  return result
 }
