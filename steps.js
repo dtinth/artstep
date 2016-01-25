@@ -17,9 +17,7 @@ module.exports = steps()
   return this.PENDING
 })
 .then('I am "$adjective"', function (x) {
-  setTimeout(function () {
-    console.log("\u001b[1;46;22;30m I'M SO " + x.toUpperCase() + '! \u001b[m')
-  }, 100)
+  console.log("\u001b[1;46;22;30m I'M SO " + x.toUpperCase() + '! \u001b[m')
 })
 .then('the scenario is pending', function (x) {
   throw new Error('Scenario is pending! This step must not run!')
