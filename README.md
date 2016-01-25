@@ -7,6 +7,8 @@ Supports promises, generators, and async functions, powered by [co](https://www.
 
 Oh, and listen to some [nice chill trap and artstep](https://www.youtube.com/watch?v=eKJJqu6P4IQ).
 
+__Note__: v55555 works with Cucumber 0.9. For older versions of Cucumber (v0.4), please use v5555.
+
 
 Why?
 ----
